@@ -10,7 +10,7 @@ def price_monitor(url, unit):
     req = requests.get(url)  # "https://www.tesla.com/ko_KR/modely/design?redirect=no#overview")
     # req.text
     soup = BeautifulSoup(req.content, "html.parser")
-    # print(soup)
+    print(soup)
     tesla = str(soup.body.script)
     tesla = tesla.replace("\\", "&")
     tesla = tesla.replace("\"", "&")
