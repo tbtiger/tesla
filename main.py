@@ -42,7 +42,7 @@ mc = '2109879317'
 bot = telepot.Bot(token)
 count = 0
 while (count < 18):
-    time.sleep(300)
+    time.sleep(60)
     KR = price_monitor(KR_tesla, 8)
     US = price_monitor(US_tesla, 5)
     CN = price_monitor(CN_tesla, 6)
@@ -80,9 +80,9 @@ while (count < 18):
                 count += 1
     
     now = datetime.now()
-    current_time = now.strftime("%H")
+    current_time = now.strftime("%H:%M:%S")
     min = now.strftime("%M")
-    if current_time == "22" and 43<= int(min) <= 48:
+    if 15 <= int(min) <= 20:
         bot.sendMessage(mc, KR_message)
         bot.sendMessage(mc, US_message)
         bot.sendMessage(mc, CN_message)
