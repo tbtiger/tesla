@@ -10,7 +10,7 @@ def price_monitor(url, unit):
     req = requests.get(url)  # "https://www.tesla.com/ko_KR/modely/design?redirect=no#overview")
     # req.text
     soup = BeautifulSoup(req.content, "html.parser")
-    print(soup)
+    # print(soup)
     tesla = str(soup.body.script)
     tesla = tesla.replace("\\", "&")
     tesla = tesla.replace("\"", "&")
@@ -41,23 +41,17 @@ token = '5168734909:AAHNEAc-pRfsv4jVetzQ_t369WqO6ZY_Mqc'
 mc = '2109879317'
 bot = telepot.Bot(token)
 count = 0
-#while (count < 18):
-KR = price_monitor(KR_tesla, 8)
-time.sleep(3)
-print(KR)
-US = price_monitor(US_tesla, 5)
-time.sleep(3)
-print(US)
-CN = price_monitor(CN_tesla, 6)
-time.sleep(3)
-print(CN)
-'''
+while (count < 18):
+    time.sleep(300)
+    KR = price_monitor(KR_tesla, 8)
+    US = price_monitor(US_tesla, 5)
+    CN = price_monitor(CN_tesla, 6)
+
     for list in [KR, US, CN]:
         if list == KR:
             KR_message = "Korea" + " 종류: " + str(list[0]) + ", 가격(KRW) :"
             for i in range(len(list[1])):
                 KR_message = KR_message + " " + str(list[1][i])
-            print(KR_message)
             if list[0] != 2:
                 bot.sendMessage(mc, '한국 모델변경\n' + KR_message)
                 count += 1
@@ -68,7 +62,6 @@ print(CN)
             US_message = "USA" + " 종류: " + str(list[0]) + ", 가격(USD) :"
             for i in range(len(list[1])):
                 US_message = US_message + " " + str(list[1][i])
-            print(US_message)
             if list[0] != 2:
                 bot.sendMessage(mc, '미국 모델변경\n' + US_message)
                 count += 1
@@ -79,7 +72,6 @@ print(CN)
             CN_message = "China" + " 종류: " + str(list[0]) + ", 가격(CNY) :"
             for i in range(len(list[1])):
                 CN_message = CN_message + " " + str(list[1][i])
-            print(CN_message)
             if list[0] != 3:
                 bot.sendMessage(mc, '중국 모델변경\n' + CN_message)
                 count += 1
@@ -88,13 +80,13 @@ print(CN)
                 count += 1
     
     now = datetime.now()
-    current_time = now.strftime("%H:%M")
-    second = now.strftime("%S")
-    if current_time == "21:59" and 0<= int(second) <= 10:
+    current_time = now.strftime("%H")
+    min = now.strftime("%M")
+    if current_time == "22" and 43<= int(min) <= 48:
         bot.sendMessage(mc, KR_message)
         bot.sendMessage(mc, US_message)
         bot.sendMessage(mc, CN_message)
-'''
+
 # print(KR_message)
 # print(US_message)
 # print(CN_message)
