@@ -75,7 +75,7 @@ while(count <18):
                 count += 1
     now = datetime.now()
     current_time = now.strftime("%H:%M:%S")
-    if current_time =="12:35:00":
+    if current_time =="12:40:00":
         bot.sendMessage(mc,KR_message)
         bot.sendMessage(mc,US_message)
         bot.sendMessage(mc,CN_message)
