@@ -25,14 +25,10 @@ def price_monitor(url,unit):
     #print(num)
     #print(price)
     return num,price
-
 KR_tesla = "https://www.tesla.com/ko_KR/modely/design?redirect=no#overview"
 US_tesla = "https://www.tesla.com/modely/design?redirect=no#overview"
 CN_tesla = "https://www.tesla.cn/modely/design?redirect=no#overview"
 
-KR=price_monitor(KR_tesla,8)
-US=price_monitor(US_tesla,5)
-CN=price_monitor(CN_tesla,6)
 
 #print(KR)
 #print(US)
@@ -42,6 +38,10 @@ mc = '2109879317'
 bot = telepot.Bot(token)
 count = 0
 while(count <18):
+    KR=price_monitor(KR_tesla,8)
+    US=price_monitor(US_tesla,5)
+    CN=price_monitor(CN_tesla,6)
+    
     for list in [KR,US,CN]:
         if list == KR:
             KR_message = "Korea"+" 종류: "+str(list[0])+ ", 가격(KRW) :"
@@ -70,9 +70,15 @@ while(count <18):
             if list[0]!=3 :
                 bot.sendMessage(mc,'중국 모델변경\n'+ CN_message)
                 count += 1
-            if list[1][0] != 375900 or list[1][1] != 417900 or list[1][2] != 301840:
+            if list[1][0] != 375900 or list[1][1] != 417900 or list[1][2] !=316900:
                 bot.sendMessage(mc,'중국 가격변경\n'+ CN_message)
                 count += 1
+    now = datetime.now()
+    current_time = now.strftime("%H:%M:%S")
+    if current_time =="12:35:00":
+        bot.sendMessage(mc,KR_message)
+        bot.sendMessage(mc,US_message)
+        bot.sendMessage(mc,CN_message)
 #print(KR_message)
 #print(US_message)
 #print(CN_message)
