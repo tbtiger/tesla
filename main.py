@@ -9,6 +9,9 @@ import time
 def price_monitor(url, unit):
     price = []
     req = requests.get(url)  # "https://www.tesla.com/ko_KR/modely/design?redirect=no#overview")
+    if  req.status_code !=200 :
+        flag = "error"
+        return req.status_code, flag
     # req.text
     soup = BeautifulSoup(req.content, "html.parser")
     # print(soup)
@@ -49,39 +52,38 @@ while (True):
     KR = price_monitor(KR_tesla, 8)
     US = price_monitor(US_tesla, 5)
     CN = price_monitor(CN_tesla, 6)
-
-    print(KR)
-    print(US)
-    print(CN)
+    if(KR[1]=="error") or (US[1]=="error") or (CN[1]=="error"):
+        bot.sendMessage(mc, '연결 오류')
+        continue
     for list in [KR, US, CN]:
         if list == KR:
             KR_message = "Korea" + " Model Y 종류: " + str(list[0]) + ", 가격(KRW) :"
             for i in range(len(list[1])):
                 KR_message = KR_message + " " + str(list[1][i])
-            if list[0] != 2 and count_KR_model <5:
+            if list[0] != 2 and count_KR_model < 5:
                 bot.sendMessage(mc, '한국 모델변경\n' + KR_message)
                 count_KR_model += 1
-            if (list[1][0] != 92390000 or list[1][1] != 86490000) and count_KR_price <5:
+            if (list[1][0] != 92390000 or list[1][1] != 86490000) and count_KR_price < 5:
                 bot.sendMessage(mc, '한국 가격변경\n' + KR_message)
                 count_KR_price += 1
         elif list == US:
             US_message = "USA" + " Model Y 종류: " + str(list[0]) + ", 가격(USD) :"
             for i in range(len(list[1])):
                 US_message = US_message + " " + str(list[1][i])
-            if list[0] != 2 and count_US_model <5:
+            if list[0] != 2 and count_US_model < 5:
                 bot.sendMessage(mc, '미국 모델변경\n' + US_message)
                 count_US_model += 1
-            if (list[1][0] != 67990 or list[1][1] != 62990) and count_US_price <5 :
+            if (list[1][0] != 67990 or list[1][1] != 62990) and count_US_price < 5:
                 bot.sendMessage(mc, '미국 가격변경\n' + US_message)
                 count_US_price += 1
         elif list == CN:
             CN_message = "China" + " Model Y 종류: " + str(list[0]) + ", 가격(CNY) :"
             for i in range(len(list[1])):
                 CN_message = CN_message + " " + str(list[1][i])
-            if list[0] != 3 and count_CN_model <5:
+            if list[0] != 3 and count_CN_model < 5:
                 bot.sendMessage(mc, '중국 모델변경\n' + CN_message)
                 count_CN_model += 1
-            if (list[1][0] != 375900 or list[1][1] != 417900 or list[1][2] != 316900) and count_CN_price <5:
+            if (list[1][0] != 375900 or list[1][1] != 417900 or list[1][2] != 316900) and count_CN_price < 5:
                 bot.sendMessage(mc, '중국 가격변경\n' + CN_message)
                 count_CN_price += 1
 
@@ -89,9 +91,9 @@ while (True):
     current_time = now.strftime("%H:%M:%S")
     hour = int(now.strftime("%H"))
     min = int(now.strftime("%M"))
-    
-    if 10<=min <=11 and hour%4==0:
-        bot.sendMessage(mc, "Model Y monitoring WORKS FINE\n"+KR_message)
+
+    if 10 <= min <= 11 and hour % 4 == 0:
+        bot.sendMessage(mc, "Model Y monitoring WORKS FINE\n" + KR_message)
 
 # print(KR_message)
 # print(US_message)
